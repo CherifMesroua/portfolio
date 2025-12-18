@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>Cherif Mesroua | AI & Android Engineer</title>
+    <meta name="description" content="Cherif Mesroua — AI & Android Developer. Master in AI & Data Science. Specializing in Petrophysics ML and Mobile Engineering." />
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* --- VARIABLES --- */
+        :root {
+            --bg-body: #f8fafc;
+            --bg-surface: #ffffff;
+            --bg-glass: rgba(255, 255, 255, 0.95); /* Slightly more opaque for better contrast */
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --primary: #2563eb;       
+            --primary-glow: rgba(37, 99, 235, 0.2);
+            --border: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            --font-en: 'Plus Jakarta Sans', sans-serif;
+            --font-ar: 'Cairo', sans-serif;
+        }
+
+        [data-theme="dark"] {
+            --bg-body: #020617;       
+            --bg-surface: #0f172a;
+            --bg-glass: rgba(15, 23, 42, 0.9);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --primary: #3b82f6;       
+            --primary-glow: rgba(59, 130, 246, 0.25);
+            --border: #1e293b;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        }
+
+        /* --- RESET --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html, body {
+            width: 100%;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            font-family: var(--font-en);
+            line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- ARABIC SUPPORT --- */
+        html[lang="ar"] body {
+            direction: rtl;
+            font-family: var(--font-ar);
+        }
+        
+        /* Image Protection */
+        img {
+            pointer-events: none;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+
+        /* --- LAYOUT UTILS --- */
+        .container { 
+            width: 100%; 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            padding: 0 1.5rem; /* Safe padding from edges */
+        }
+        .section { padding: 5rem 0; }
+
+        /* --- BUTTONS --- */
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+            padding: 0.75rem 1.5rem; border-radius: 99px;
+            font-weight: 600; text-decoration: none;
+            transition: all 0.2s ease; cursor: pointer;
+            border: 1px solid transparent; font-size: 0.95rem;
+            white-space: nowrap;
+        }
+        .btn-primary { background-color: var(--primary); color: white; box-shadow: 0 4px 14px var(--primary-glow); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px var(--primary-glow); }
+        .btn-outline { background: transparent; border-color: var(--border); color: var(--text-main); }
+        .btn-outline:hover { border-color: var(--text-muted); background: var(--bg-surface); }
+        .btn-disabled { background: var(--border); color: var(--text-muted); cursor: not-allowed; opacity: 0.7; }
+
+        .icon-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            width: 40px;
+            height: 40px;
+            /* --- THE FIX IS HERE --- */
+            min-width: 40px;  /* Forces it to stay 40px wide */
+            flex-shrink: 0;   /* Prevents the navbar from squashing it */
+            padding: 0;       /* Removes internal padding that might distort it */
+            /* ----------------------- */
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        
+        /* --- NAVIGATION (FIXED) --- */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0;
+            height: 70px;
+            z-index: 100;
+            background: var(--bg-glass);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            display: flex; align-items: center;
+        }
+        
+        .nav-inner {
+            width: 100%;
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; /* This handles LTR and RTL swapping automatically */
+        }
+
+        .logo { font-weight: 800; font-size: 1.25rem; color: var(--text-main); text-decoration: none; }
+        .logo span { color: var(--primary); }
+
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a { text-decoration: none; color: var(--text-muted); font-weight: 500; transition: 0.2s; }
+        .nav-links a:hover { color: var(--primary); }
+
+        .nav-actions { display: flex; align-items: center; gap: 0.75rem; }
+
+        /* --- HERO --- */
+        .hero {
+            min-height: 90vh; display: flex; align-items: center; justify-content: center;
+            text-align: center; position: relative; padding-top: 80px;
+        }
+        
+        .hero h1 {
+            font-size: clamp(2.2rem, 5vw, 4rem);
+            line-height: 1.1; font-weight: 800; margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, var(--text-main) 30%, var(--primary));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .hero p { font-size: 1.1rem; color: var(--text-muted); max-width: 650px; margin: 0 auto 2.5rem auto; }
+        .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+        /* --- ABOUT --- */
+        .about-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 3rem; align-items: center; }
+        .section-title { font-size: 2rem; font-weight: 700; margin-bottom: 2rem; text-align: center; }
+        .about-text p { margin-bottom: 1.5rem; color: var(--text-muted); }
+        .about-text strong { color: var(--primary); font-weight: 600; }
+
+        .skills-wrapper { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+        .skill-tag {
+            background: var(--bg-surface); border: 1px solid var(--border);
+            padding: 0.4rem 0.9rem; border-radius: 8px; font-size: 0.85rem;
+        }
+        .profile-card img { width: 100%; border-radius: 16px; display: block; }
+
+        /* --- PROJECTS --- */
+        .projects-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;
+            justify-content: center;
+        }
+        .project-card {
+            background: var(--bg-surface); border: 1px solid var(--border);
+            border-radius: 16px; overflow: hidden; display: flex; flex-direction: column;
+            transition: 0.3s ease;
+        }
+        .project-card:hover { transform: translateY(-5px); border-color: var(--primary); }
+        .project-img { height: 180px; display: flex; justify-content: center; overflow: hidden; background: #eee; }
+        .project-img img { width: 100%; height: 100%; object-fit: cover; }
+        .project-content { padding: 1.5rem; flex: 1; display: flex; flex-direction: column; }
+        .project-content h3 { font-size: 1.25rem; margin-bottom: 0.5rem; }
+        .project-content p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem; flex-grow: 1; }
+        .tech-stack { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+        .tech-badge { font-size: 0.75rem; color: var(--primary); background: var(--primary-glow); padding: 2px 8px; border-radius: 4px; }
+        .project-link {
+            margin-top: auto; color: var(--text-main); font-weight: 600; font-size: 0.9rem;
+            display: flex; align-items: center; gap: 0.25rem; background: none; border: none; cursor: pointer; padding: 0;
+        }
+
+        /* --- CONTACT --- */
+        .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; }
+        .contact-item {
+            background: var(--bg-surface); border: 1px solid var(--border);
+            padding: 2rem; border-radius: 16px; text-align: center;
+        }
+        .contact-item i { margin-bottom: 1rem; color: var(--primary); }
+        .contact-item a { color: var(--text-muted); text-decoration: none; word-break: break-all; }
+
+        /* --- FOOTER --- */
+        footer { border-top: 1px solid var(--border); padding: 3rem 0; text-align: center; color: var(--text-muted); margin-top: 4rem; }
+
+        /* --- MODAL --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.7); backdrop-filter: blur(4px);
+            z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 1rem;
+            opacity: 0; pointer-events: none; transition: 0.3s;
+        }
+        .modal-overlay.active { opacity: 1; pointer-events: all; }
+        .modal-box {
+            background: var(--bg-surface); width: 100%; max-width: 550px;
+            padding: 2rem; border-radius: 20px; border: 1px solid var(--border);
+            position: relative; transform: scale(0.95); transition: 0.3s;
+        }
+        .modal-overlay.active .modal-box { transform: scale(1); }
+        .close-btn {
+            position: absolute; top: 1.25rem; right: 1.25rem; background: none; border: none;
+            color: var(--text-muted); cursor: pointer;
+        }
+        html[lang="ar"] .close-btn { right: auto; left: 1.25rem; }
+
+        /* --- MOBILE RESPONSIVENESS --- */
+        @media (max-width: 768px) {
+            /* Hide Desktop Menu */
+            .nav-links { display: none; } 
+            
+            /* Stack About Section */
+            .about-grid { grid-template-columns: 1fr; text-align: center; } 
+            .about-text { order: 2; }
+            .profile-card { order: 1; max-width: 300px; margin: 0 auto; transform: none; }
+            .profile-card:hover { transform: none; }
+            
+            /* Alignments */
+            .skills-wrapper { justify-content: center; }
+            .section-title { text-align: center !important; }
+            
+            /* Padding */
+            .section { padding: 4rem 0; }
+            .hero { padding-top: 100px; }
+            
+            /* Buttons */
+            .hero-btns { flex-direction: column; width: 100%; max-width: 300px; margin: 0 auto; }
+            .btn { width: 100%; }
+
+            /* RTL Fix: Ensure no extra margins break layout on mobile */
+            html[lang="ar"] .nav-actions { margin: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="container nav-inner">
+            <a href="#" class="logo" data-i18n="brand">Ar<span>gaz</span></a>
+            
+            <ul class="nav-links">
+                <li><a href="#home" data-i18n="navHome">Home</a></li>
+                <li><a href="#about" data-i18n="navAbout">About</a></li>
+                <li><a href="#projects" data-i18n="navProjects">Projects</a></li>
+                <li><a href="#contact" data-i18n="navContact">Contact</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <button class="icon-btn" id="themeToggle" aria-label="Toggle Theme">
+                    <i data-lucide="moon" id="themeIcon"></i>
+                </button>
+                <button class="btn btn-outline" id="langToggle" style="padding: 0.5rem 1rem;">عربي</button>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- HERO -->
+        <section id="home" class="hero">
+            <div class="container">
+                <h1 data-i18n="heroTitle">AI & Android<br><span class="gradient-text">Engineer</span></h1>
+                <p data-i18n="heroSubtitle">Transforming complex data into intelligent applications. Specialized in Machine Learning, Petrophysics, and Mobile Development.</p>
+                <div class="hero-btns">
+                    <a href="#projects" class="btn btn-primary">
+                        <span data-i18n="viewProjectsBtn">View Work</span>
+                        <i data-lucide="arrow-right" size="18"></i>
+                    </a>
+                    <a href="./resources/CV_Cherif_Mesroua.pdf" class="btn btn-outline" download="CV_Cherif_Mesroua.pdf" target="_blank">
+                        <i data-lucide="download" size="18"></i>
+                        <span data-i18n="downloadCvBtn">Download CV</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT -->
+        <section id="about" class="section">
+            <div class="container">
+                <div class="about-grid">
+                    <div class="about-text">
+                        <h2 class="section-title" data-i18n="aboutTitle" style="text-align: left;">About Me</h2>
+                        
+                        <p data-i18n="aboutP1">Hello, I'm <strong>Cherif Mesroua</strong>. Holding a <strong>Master's in AI & Data Science</strong>, I bridge the gap between advanced academic research and robust application development. My passion lies in building intelligent tools that solve real-world problems in the subsurface and energy sectors.</p>
+                        <p data-i18n="aboutP2">Leveraging this academic foundation alongside expertise in <strong>Machine Learning</strong> and <strong>Android Development</strong>, I create systems that automate lithofacies classification and visualize complex petrophysical data.</p>
+                        <p data-i18n="aboutP3">I collaborate with teams to translate complex algorithms into user-friendly products — delivering efficient, maintainable, and impactful solutions.</p>
+                        
+                        <div class="skills-wrapper">
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">TensorFlow</span>
+                            <span class="skill-tag">Kotlin</span>
+                            <span class="skill-tag">Jetpack Compose</span>
+                            <span class="skill-tag">Data Science</span>
+                            <span class="skill-tag">Computer Vision</span>
+                            <span class="skill-tag">Django</span>
+                            <span class="skill-tag">JavaFX</span>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-card">
+                        <img src="./resources/profile_img.png" alt="Cherif Mesroua" loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROJECTS -->
+        <section id="projects" class="section">
+            <div class="container">
+                <h2 class="section-title" data-i18n="projectsTitle">Selected Works</h2>
+                <div class="projects-grid">
+                    
+                    <!-- 1. Petrophysical Prediction -->
+                    <article class="project-card">
+                        <div class="project-img">
+                            <img src="./resources/petroParam_project.png" alt="Petrophysical AI">
+                        </div>
+                        <div class="project-content">
+                            <div class="tech-stack">
+                                <span class="tech-badge">Python</span>
+                                <span class="tech-badge">ML</span>
+                            </div>
+                            <h3 data-i18n="p1Title">Petrophysical AI Prediction</h3>
+                            <p data-i18n="p1Desc">End-to-end AI pipeline for estimating porosity and shale volume from raw well-log data.</p>
+                            <button class="project-link" onclick="openModal('p1')">
+                                <span data-i18n="viewDetails">View Details</span> 
+                                <i data-lucide="arrow-right" size="16"></i>
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- 2. Log Imputation -->
+                    <article class="project-card">
+                        <div class="project-img">
+                            <img src="./resources/wgainimp.png" alt="Log Imputation">
+                        </div>
+                        <div class="project-content">
+                            <div class="tech-stack">
+                                <span class="tech-badge">TensorFlow</span>
+                                <span class="tech-badge">LSTM</span>
+                            </div>
+                            <h3 data-i18n="p2Title">Smart Log Imputation</h3>
+                            <p data-i18n="p2Desc">Reconstructing missing geological logs (Gamma Ray, Resistivity) using deep learning.</p>
+                            <button class="project-link" onclick="openModal('p2')">
+                                <span data-i18n="viewDetails">View Details</span>
+                                <i data-lucide="arrow-right" size="16"></i>
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- 3. Lithofacies -->
+                    <article class="project-card">
+                        <div class="project-img">
+                            <img src="./resources/lithology_classification_project.png" alt="Lithofacies">
+                        </div>
+                        <div class="project-content">
+                            <div class="tech-stack">
+                                <span class="tech-badge">Pandas</span>
+                                <span class="tech-badge">Classification</span>
+                            </div>
+                            <h3 data-i18n="p3Title">Lithofacies Classification</h3>
+                            <p data-i18n="p3Desc">Automated lithology detection using the FORCE 2020 dataset for geological interpretation.</p>
+                            <button class="project-link" onclick="openModal('p3')">
+                                <span data-i18n="viewDetails">View Details</span>
+                                <i data-lucide="arrow-right" size="16"></i>
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- 4. AiLIP Tool -->
+                    <article class="project-card">
+                        <div class="project-img">
+                            <img src="./resources/AiPipeline.png" alt="AiLIP Tool">
+                        </div>
+                        <div class="project-content">
+                            <div class="tech-stack">
+                                <span class="tech-badge">PyQt5</span>
+                                <span class="tech-badge">Desktop</span>
+                            </div>
+                            <h3 data-i18n="p4Title">AiLIP – Analysis Tool</h3>
+                            <p data-i18n="p4Desc">Desktop application automating log imputation and petrophysical property prediction.</p>
+                            <button class="project-link" onclick="openModal('p4')">
+                                <span data-i18n="viewDetails">View Details</span>
+                                <i data-lucide="arrow-right" size="16"></i>
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- 5. Forecasting -->
+                    <article class="project-card">
+                        <div class="project-img">
+                            <img src="./resources/1xbet_forcasting_project.png" alt="Forecasting">
+                        </div>
+                        <div class="project-content">
+                            <div class="tech-stack">
+                                <span class="tech-badge">Python</span>
+                                <span class="tech-badge">LSTM</span>
+                            </div>
+                            <h3 data-i18n="p5Title">Time-Series Forecasting</h3>
+                            <p data-i18n="p5Desc">Pipeline for scraping data and building ARIMA/LSTM models for trend analysis.</p>
+                            <button class="project-link" onclick="openModal('p5')">
+                                <span data-i18n="viewDetails">View Details</span>
+                                <i data-lucide="arrow-right" size="16"></i>
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- 6. Well Ops Manager (PROTECTED) -->
+                    <article class="project-card">
+                        <div class="project-img">
+                            <img src="./resources/operation_app.png" alt="Well Ops App">
+                        </div>
+                        <div class="project-content">
+                            <div class="tech-stack">
+                                <span class="tech-badge">Android</span>
+                                <span class="tech-badge">Desktop</span>
+                                <span class="tech-badge">Kotlin</span>
+                                <span class="tech-badge">Django</span>
+                                <span class="tech-badge">JavaFX</span>
+                                <span class="tech-badge">Fullstack</span>
+                            </div>
+                            <h3 data-i18n="p6Title">PetroPalm (my startup)</h3>
+                            <p data-i18n="p6Desc">a fullstack software solution (Kotlin + javafx + Django)</p>
+                            <button class="project-link" onclick="openModal('p6')">
+                                <span data-i18n="viewDetails">View Details</span>
+                                <i data-lucide="arrow-right" size="16"></i>
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- 7. Animal World (App) -->
+                    <article class="project-card">
+                        <div class="project-img">
+                            <img src="./resources/theanimalworld.jpg" alt="Animal App">
+                        </div>
+                        <div class="project-content">
+                            <div class="tech-stack">
+                                <span class="tech-badge">Java</span>
+                                <span class="tech-badge">Firebase</span>
+                            </div>
+                            <h3 data-i18n="p7Title">The Animal World</h3>
+                            <p data-i18n="p7Desc">Interactive educational Android app for kids with visuals, sounds and mini-games.</p>
+                            <button class="project-link" onclick="openModal('p7')">
+                                <span data-i18n="viewDetails">View Details</span>
+                                <i data-lucide="arrow-right" size="16"></i>
+                            </button>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section id="contact" class="section">
+            <div class="container">
+                <h2 class="section-title" data-i18n="contactTitle">Get in Touch</h2>
+                <div class="contact-grid">
+                    <div class="contact-item">
+                        <i data-lucide="mail" size="32"></i>
+                        <h4 data-i18n="labelEmail">Email</h4>
+                        <a href="mailto:cherif.mesrou@gmail.com">cherif.mesrou@gmail.com</a>
+                    </div>
+                    <div class="contact-item">
+                        <i data-lucide="linkedin" size="32"></i>
+                        <h4 data-i18n="labelLinkedIn">LinkedIn</h4>
+                        <a href="https://linkedin.com/in/mesroua-cherif-56784b27a/" target="_blank">Connect Profile</a>
+                    </div>
+                    <div class="contact-item">
+                        <i data-lucide="github" size="32"></i>
+                        <h4 data-i18n="labelGitHub">GitHub</h4>
+                        <a href="https://github.com/CherifMesroua" target="_blank">@CherifMesroua</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p data-i18n="footerText">&copy; 2025 Cherif Mesroua (مسروه). Built with Code & Data.</p>
+        </div>
+    </footer>
+
+    <!-- MODAL POPUP -->
+    <div class="modal-overlay" id="detailModal">
+        <div class="modal-box">
+            <button class="close-btn" onclick="closeModal()"><i data-lucide="x"></i></button>
+            <h2 id="modalTitle" style="margin-bottom: 1rem;">Project Title</h2>
+            <p id="modalDesc" style="color: var(--text-muted); margin-bottom: 2rem; line-height: 1.7;">Description...</p>
+            <div id="modalAction"></div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        lucide.createIcons();
+
+        // --- IMAGE PROTECTION ---
+        document.addEventListener('contextmenu', e => { if(e.target.tagName === 'IMG') e.preventDefault(); });
+        document.addEventListener('dragstart', e => { if(e.target.tagName === 'IMG') e.preventDefault(); });
+
+        // --- TRANSLATIONS ---
+        const translations = {
+            en: {
+                brand: "Ar<span>gaz</span>",
+                navHome: "Home",
+                navAbout: "About",
+                navProjects: "Work",
+                navContact: "Contact",
+                heroTitle: "AI & Android<br><span class='gradient-text'>Engineer</span>",
+                heroSubtitle: "Transforming complex data into intelligent applications. Specialized in Machine Learning, Petrophysics, and Mobile Development.",
+                viewProjectsBtn: "View Work",
+                downloadCvBtn: "Download CV",
+                aboutTitle: "About Me",
+                aboutP1: "Hello, I'm <strong>Cherif Mesroua</strong>. Holding a <strong>Master's in AI & Data Science</strong>, I bridge the gap between advanced academic research and robust application development. My passion lies in building intelligent tools that solve real-world problems in the subsurface and energy sectors.",
+                aboutP2: "Leveraging this academic foundation alongside expertise in <strong>Machine Learning</strong> and <strong>Android Development</strong>, I create systems that automate lithofacies classification and visualize complex petrophysical data.",
+                aboutP3: "I collaborate with teams to translate complex algorithms into user-friendly products — delivering efficient, maintainable, and impactful solutions.",
+                projectsTitle: "Selected Works",
+                p1Title: "Petrophysical AI Prediction",
+                p1Desc: "End-to-end AI pipeline for estimating porosity and shale volume from raw well-log data.",
+                p2Title: "Smart Log Imputation",
+                p2Desc: "Reconstructing missing geological logs (Gamma Ray, Resistivity) using deep learning.",
+                p3Title: "Lithofacies Classification",
+                p3Desc: "Automated lithology detection using the FORCE 2020 dataset for geological interpretation.",
+                p4Title: "AiLIP – Analysis Tool",
+                p4Desc: "Desktop application (PyQt5) automating log imputation and petrophysical property prediction.",
+                p5Title: "Time-Series Forecasting",
+                p5Desc: "Pipeline for scraping data and building ARIMA/LSTM models for trend analysis.",
+                p6Title: "PetroPalm (my startup)",
+                p6Desc: "a fullstack software solution (Kotlin + javafx + Django)",
+                p7Title: "The Animal World",
+                p7Desc: "Interactive educational Android app for kids with visuals, sounds and mini-games.",
+                viewDetails: "View Details",
+                contactTitle: "Get in Touch",
+                labelEmail: "Email",
+                labelLinkedIn: "LinkedIn",
+                labelGitHub: "GitHub",
+                footerText: "© 2025 Cherif Mesroua (مسروه). Built with Code & Data.",
+                m_p1_desc: "This project uses Random Forest and XGBoost to predict Porosity and Shale Volume. It was trained on 50+ wells from the Volve field.",
+                m_p2_desc: "A Deep Learning approach using LSTMs to impute missing Gamma Ray logs. It achieved a 0.92 correlation coefficient on test data.",
+                m_p3_desc: "A classification system utilizing the FORCE 2020 dataset. It helps geologists identify lithology automatically, saving hours of manual interpretation.",
+                m_p4_desc: "AiLIP is a comprehensive desktop tool built with PyQt5. It packages the ML models into a user-friendly interface for geoscientists.",
+                m_p5_desc: "This project involved scraping real-time betting data (1xBet) and using LSTM networks to forecast future trends and probabilities.",
+                m_p6_desc: "beta private/under development.",
+                m_p7_desc: "An educational app built with Java and Firebase. It features interactive quizzes, animal sounds, and a kid-friendly UI.",
+                visitRepo: "View Code on GitHub",
+                proprietaryBtn: "Proprietary Project (Private)"
+            },
+            ar: {
+                brand: "Ar<span>gaz</span>",
+                navHome: "الرئيسية",
+                navAbout: "عن المطور",
+                navProjects: "أعمالي",
+                navContact: "تواصل",
+                heroTitle: "مهندس الذكاء الاصطناعي<br><span class='gradient-text'>وتطبيقات الأندرويد</span>",
+                heroSubtitle: "تحويل البيانات المعقدة إلى تطبيقات ذكية. متخصص في تعلم الآلة، البتروفيزياء، وتطوير التطبيقات.",
+                viewProjectsBtn: "تصفح أعمالي",
+                downloadCvBtn: "تحميل السيرة الذاتية",
+                aboutTitle: "نبذة عني",
+                aboutP1: "مرحباً، أنا <strong>شريف مسروه</strong>. بصفتي حاصلاً على <strong>ماجستير في الذكاء الاصطناعي وعلوم البيانات</strong>، أعمل كجسر يربط بين البحث الأكاديمي المتقدم وتطوير البرمجيات العملية. شغفي يكمن في بناء أدوات ذكية تحل مشاكل حقيقية في قطاع الطاقة.",
+                aboutP2: "أوظف تخصصي الأكاديمي وخبرتي العملية في <strong>تعلم الآلة</strong> و<strong>تطوير الأندرويد</strong> لإنشاء أنظمة قوية تقوم بأتمتة تصنيف الصخور وتصور البيانات البتروفيزيائية المعقدة.",
+                aboutP3: "أتعاون مع الفرق لتحويل الخوارزميات المعقدة إلى منتجات سهلة الاستخدام — مقدماً حلولاً فعالة وعالية الجودة.",
+                projectsTitle: "أعمال مختارة",
+                p1Title: "توقعات بتروفيزيائية بالذكاء الاصطناعي",
+                p1Desc: "خط عمل متكامل لتقدير المسامية وحجم الغضار من سجلات الآبار بدقة عالية.",
+                p2Title: "التعويض الذكي للسجلات",
+                p2Desc: "إعادة بناء السجلات الجيولوجية المفقودة (أشعة جاما والمقاومة) باستخدام التعلم العميق.",
+                p3Title: "تصنيف السحنات الصخرية",
+                p3Desc: "نظام كشف آلي لنوعية الصخور باستخدام بيانات FORCE 2020 لتسريع التفسير الجيولوجي.",
+                p4Title: "أداة التحليل AiLIP",
+                p4Desc: "تطبيق سطح مكتب (PyQt5) يقوم بأتمتة تعويض السجلات وتوقع الخصائص البتروفيزيائية.",
+                p5Title: "التنبؤ بالسلاسل الزمنية",
+                p5Desc: "نظام لكشط البيانات وبناء نماذج ARIMA/LSTM لتحليل الاتجاهات المستقبلية.",
+                p6Title: "PetroPalm (شركتي الناشئة)",
+                p6Desc: "و مشروعي الريادي. حل برمجي متكامل (Kotlin + Django)",
+                p7Title: "عالم الحيوان",
+                p7Desc: "تطبيق تعليمي تفاعلي للأطفال يحتوي على صور وأصوات وألعاب مصغرة.",
+                viewDetails: "عرض التفاصيل",
+                contactTitle: "تواصل معي",
+                labelEmail: "البريد الإلكتروني",
+                labelLinkedIn: "لينكد إن",
+                labelGitHub: "جيت هب",
+                footerText: "© 2025 شريف مسروه. صُنِع بالكود والبيانات.",
+                m_p1_desc: "يستخدم هذا المشروع خوارزميات Random Forest و XGBoost للتنبؤ بالمسامية وحجم الغضار. تم تدريبه على أكثر من 50 بئراً من حقل Volve.",
+                m_p2_desc: "نهج يعتمد على التعلم العميق باستخدام شبكات LSTM لتعويض سجلات أشعة جاما المفقودة. حقق معامل ارتباط 0.92 في بيانات الاختبار.",
+                m_p3_desc: "نظام تصنيف يستخدم مجموعة بيانات FORCE 2020. يساعد الجيولوجيين على تحديد نوعية الصخور تلقائيًا، مما يوفر ساعات من التفسير اليدوي.",
+                m_p4_desc: "AiLIP هو أداة سطح مكتب شاملة مبنية بـ PyQt5. تقوم بتغليف نماذج التعلم الآلي في واجهة سهلة الاستخدام للجيولوجيين.",
+                m_p5_desc: "تضمن هذا المشروع كشط بيانات المراهنات في الوقت الفعلي (1xBet) واستخدام شبكات LSTM للتنبؤ بالاتجاهات والاحتمالات المستقبلية.",
+                m_p6_desc: "beta خاصة/قيد التطوير.",
+                m_p7_desc: "تطبيق تعليمي تم بناؤه باستخدام Java و Firebase. يتميز بمسابقات تفاعلية وأصوات حيوانات وواجهة مناسبة للأطفال.",
+                visitRepo: "عرض الكود على GitHub",
+                proprietaryBtn: "مشروع خاص (غير متاح)"
+            }
+        };
+
+        let currentLang = "en";
+        const html = document.documentElement;
+        
+        // --- THEME TOGGLE ---
+        const themeBtn = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        html.setAttribute('data-theme', savedTheme);
+        updateThemeIcon(savedTheme);
+
+        themeBtn.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+
+        function updateThemeIcon(theme) {
+            themeIcon.setAttribute('data-lucide', theme === 'dark' ? 'sun' : 'moon');
+            lucide.createIcons();
+        }
+
+        // --- LANGUAGE TOGGLE ---
+        const langBtn = document.getElementById('langToggle');
+        langBtn.addEventListener('click', () => {
+            currentLang = currentLang === 'en' ? 'ar' : 'en';
+            html.lang = currentLang;
+            langBtn.textContent = currentLang === 'en' ? 'عربي' : 'English';
+            
+            // Fix Mobile alignment for section titles
+            const title = document.querySelector('.section-title');
+            if(window.innerWidth > 768) {
+                title.style.textAlign = currentLang === 'ar' ? 'right' : 'left';
+            } else {
+                title.style.textAlign = 'center';
+            }
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if(translations[currentLang][key]) el.innerHTML = translations[currentLang][key];
+            });
+        });
+
+        // --- MODAL LOGIC ---
+        const modal = document.getElementById('detailModal');
+        const mTitle = document.getElementById('modalTitle');
+        const mDesc = document.getElementById('modalDesc');
+        const mAction = document.getElementById('modalAction');
+
+        const projectData = {
+            'p1': { titleKey: 'p1Title', descKey: 'm_p1_desc', link: 'https://github.com/CherifMesroua', isPrivate: false },
+            'p2': { titleKey: 'p2Title', descKey: 'm_p2_desc', link: 'https://github.com/CherifMesroua', isPrivate: false },
+            'p3': { titleKey: 'p3Title', descKey: 'm_p3_desc', link: 'https://github.com/CherifMesroua', isPrivate: false },
+            'p4': { titleKey: 'p4Title', descKey: 'm_p4_desc', link: 'https://github.com/CherifMesroua', isPrivate: false },
+            'p5': { titleKey: 'p5Title', descKey: 'm_p5_desc', link: 'https://github.com/CherifMesroua', isPrivate: false },
+            'p6': { titleKey: 'p6Title', descKey: 'm_p6_desc', link: '#', isPrivate: true },
+            'p7': { titleKey: 'p7Title', descKey: 'm_p7_desc', link: 'https://github.com/CherifMesroua', isPrivate: false }
+        };
+
+        function openModal(id) {
+            const data = projectData[id];
+            if(!data) return;
+            mTitle.textContent = translations[currentLang][data.titleKey];
+            mDesc.textContent = translations[currentLang][data.descKey];
+            if (data.isPrivate) {
+                mAction.innerHTML = `<button class="btn btn-disabled" disabled>${translations[currentLang].proprietaryBtn}</button>`;
+            } else {
+                mAction.innerHTML = `<a href="${data.link}" target="_blank" class="btn btn-primary">${translations[currentLang].visitRepo}</a>`;
+            }
+            modal.classList.add('active');
+        }
+
+        function closeModal() { modal.classList.remove('active'); }
+        modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
+    </script>
+</body>
+</html>
