@@ -19,7 +19,7 @@
         :root {
             --bg-body: #f8fafc;
             --bg-surface: #ffffff;
-            --bg-glass: rgba(255, 255, 255, 0.95); /* Slightly more opaque for better contrast */
+            --bg-glass: rgba(255, 255, 255, 0.95);
             --text-main: #0f172a;
             --text-muted: #64748b;
             --primary: #2563eb;       
@@ -59,6 +59,12 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
+        /* --- CUSTOM SCROLLBAR --- */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--bg-body); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
         /* --- ARABIC SUPPORT --- */
         html[lang="ar"] body {
             direction: rtl;
@@ -77,7 +83,7 @@
             width: 100%; 
             max-width: 1200px; 
             margin: 0 auto; 
-            padding: 0 1.5rem; /* Safe padding from edges */
+            padding: 0 1.5rem; 
         }
         .section { padding: 5rem 0; }
 
@@ -102,11 +108,9 @@
             color: var(--text-main);
             width: 40px;
             height: 40px;
-            /* --- THE FIX IS HERE --- */
-            min-width: 40px;  /* Forces it to stay 40px wide */
-            flex-shrink: 0;   /* Prevents the navbar from squashing it */
-            padding: 0;       /* Removes internal padding that might distort it */
-            /* ----------------------- */
+            min-width: 40px;
+            flex-shrink: 0;
+            padding: 0;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -115,7 +119,7 @@
             transition: 0.2s;
         }
         
-        /* --- NAVIGATION (FIXED) --- */
+        /* --- NAVIGATION --- */
         nav {
             position: fixed; top: 0; left: 0; right: 0;
             height: 70px;
@@ -128,9 +132,12 @@
         
         .nav-inner {
             width: 100%;
-            display: flex; 
-            align-items: center; 
-            justify-content: space-between; /* This handles LTR and RTL swapping automatically */
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem; /* Adds safe spacing from the edges */
+            max-width: none; /* Ensures it stretches the full width */
         }
 
         .logo { font-weight: 800; font-size: 1.25rem; color: var(--text-main); text-decoration: none; }
@@ -165,6 +172,22 @@
         .section-title { font-size: 2rem; font-weight: 700; margin-bottom: 2rem; text-align: center; }
         .about-text p { margin-bottom: 1.5rem; color: var(--text-muted); }
         .about-text strong { color: var(--primary); font-weight: 600; }
+        .about-fun {
+            margin-top: 1.5rem;
+            padding: 0.75rem 1rem;
+            background: rgba(37, 99, 235, 0.05); /* Very faint blue background */
+            border-left: 3px solid var(--primary);
+            font-style: italic;
+            color: var(--text-main);
+            font-size: 0.9rem;
+            border-radius: 0 8px 8px 0;
+        }
+        /* RTL support for the border */
+        html[lang="ar"] .about-fun {
+            border-left: none;
+            border-right: 3px solid var(--primary);
+            border-radius: 8px 0 0 8px;
+        }
 
         .skills-wrapper { display: flex; flex-wrap: wrap; gap: 0.6rem; }
         .skill-tag {
@@ -230,37 +253,45 @@
 
         /* --- MOBILE RESPONSIVENESS --- */
         @media (max-width: 768px) {
-            /* Hide Desktop Menu */
             .nav-links { display: none; } 
-            
-            /* Stack About Section */
             .about-grid { grid-template-columns: 1fr; text-align: center; } 
             .about-text { order: 2; }
             .profile-card { order: 1; max-width: 300px; margin: 0 auto; transform: none; }
             .profile-card:hover { transform: none; }
-            
-            /* Alignments */
             .skills-wrapper { justify-content: center; }
             .section-title { text-align: center !important; }
-            
-            /* Padding */
             .section { padding: 4rem 0; }
             .hero { padding-top: 100px; }
-            
-            /* Buttons */
             .hero-btns { flex-direction: column; width: 100%; max-width: 300px; margin: 0 auto; }
             .btn { width: 100%; }
-
-            /* RTL Fix: Ensure no extra margins break layout on mobile */
             html[lang="ar"] .nav-actions { margin: 0; }
         }
+
+        /* --- RESEARCH SECTION --- */
+        .research-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+
+        .research-card {
+            background: var(--bg-surface); border: 1px solid var(--border);
+            padding: 1.5rem; border-radius: 16px; display: flex; gap: 1rem;
+            transition: 0.3s;
+        }
+        .research-card:hover { border-color: var(--primary); transform: translateY(-3px); }
+
+        .research-icon {
+            width: 40px; height: 40px; background: var(--primary-glow); color: var(--primary);
+            border-radius: 8px; display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        .research-conf { font-size: 0.8rem; font-weight: 600; color: var(--primary); text-transform: uppercase; letter-spacing: 0.5px; }
+        .research-content h3 { font-size: 1.1rem; margin: 0.25rem 0 0.5rem 0; line-height: 1.3; }
+        .research-content p { font-size: 0.9rem; color: var(--text-muted); margin: 0; }
     </style>
 </head>
 <body>
 
     <nav>
-        <div class="container nav-inner">
-            <a href="#" class="logo" data-i18n="brand">Ar<span>gaz</span></a>
+        <div class="nav-inner">
+            <a href="#" class="logo" data-i18n="brand">Argaz<span>.dev</span></a>
             
             <ul class="nav-links">
                 <li><a href="#home" data-i18n="navHome">Home</a></li>
@@ -282,7 +313,7 @@
         <!-- HERO -->
         <section id="home" class="hero">
             <div class="container">
-                <h1 data-i18n="heroTitle">AI & Android<br><span class="gradient-text">Engineer</span></h1>
+                <h1 data-i18n="heroTitle">AI & Android<br><span class="gradient-text">Engineering</span></h1>
                 <p data-i18n="heroSubtitle">Transforming complex data into intelligent applications. Specialized in Machine Learning, Petrophysics, and Mobile Development.</p>
                 <div class="hero-btns">
                     <a href="#projects" class="btn btn-primary">
@@ -304,10 +335,14 @@
                     <div class="about-text">
                         <h2 class="section-title" data-i18n="aboutTitle" style="text-align: left;">About Me</h2>
                         
-                        <p data-i18n="aboutP1">Hello, I'm <strong>Cherif Mesroua</strong>. Holding a <strong>Master's in AI & Data Science</strong>, I bridge the gap between advanced academic research and robust application development. My passion lies in building intelligent tools that solve real-world problems in the subsurface and energy sectors.</p>
-                        <p data-i18n="aboutP2">Leveraging this academic foundation alongside expertise in <strong>Machine Learning</strong> and <strong>Android Development</strong>, I create systems that automate lithofacies classification and visualize complex petrophysical data.</p>
-                        <p data-i18n="aboutP3">I collaborate with teams to translate complex algorithms into user-friendly products — delivering efficient, maintainable, and impactful solutions.</p>
-                        
+                        <p data-i18n="aboutP1">I help businesses and startups transform complex ideas into high-performance software. My focus is on delivering <strong>scalable, production-ready solutions</strong> that drive real value—whether it's automating workflows or building engaging mobile experiences.</p>
+
+                        <p data-i18n="aboutP2">With a <strong>Master's in AI</strong> and industry experience at <strong>Sonatrach</strong>, I bring a rigorous engineering mindset to every project. I don't just write code; I build reliable systems that handle real-world data and solve critical business challenges.</p>
+
+                        <p data-i18n="aboutP3">As the founder of a tech startup, I understand the importance of speed and quality. From AI-powered analytics to full-stack Android apps, I partner with clients to bring their vision to life efficiently and effectively.</p>
+                        <p class="about-fun" data-i18n="aboutFun">
+                            💡 <strong>Fun Fact:</strong> I build AI systems, and they seem to know me back. Go ahead, ask ChatGPT or Gemini about 'Cherif Mesroua' — even the algorithms vouch for me!
+                        </p>
                         <div class="skills-wrapper">
                             <span class="skill-tag">Python</span>
                             <span class="skill-tag">TensorFlow</span>
@@ -323,6 +358,46 @@
                     <div class="profile-card">
                         <img src="./resources/profile_img.png" alt="Cherif Mesroua" loading="lazy">
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RESEARCH & PUBLICATIONS -->
+        <section id="research" class="section">
+            <div class="container">
+                <h2 class="section-title" data-i18n="researchTitle">Research & Publications</h2>
+                <div class="research-grid">
+                    
+                    <!-- Paper 1 -->
+                    <div class="research-card">
+                        <div class="research-icon"><i data-lucide="book-open"></i></div>
+                        <div class="research-content">
+                            <span class="research-conf">ISPR 2025 (Tunisia)</span>
+                            <h3 data-i18n="res1Title">Depth-Aware Imputation of Missing Well Log Data</h3>
+                            <p data-i18n="res1Desc">A Comparative Study on Algerian Reservoir Data. Presented findings to international AI and geoscience experts.</p>
+                        </div>
+                    </div>
+
+                    <!-- Paper 2 -->
+                    <div class="research-card">
+                        <div class="research-icon"><i data-lucide="mic"></i></div>
+                        <div class="research-content">
+                            <span class="research-conf">CAIDT 2025 (Algeria)</span>
+                            <h3 data-i18n="res2Title">ML-Based Lithology Classification</h3>
+                            <p data-i18n="res2Desc">Delivered a paper on using the FORCE 2020 dataset for automated lithology detection.</p>
+                        </div>
+                    </div>
+
+                    <!-- Workshop -->
+                    <div class="research-card">
+                        <div class="research-icon"><i data-lucide="users"></i></div>
+                        <div class="research-content">
+                            <span class="research-conf">Kasdi Merbah University</span>
+                            <h3 data-i18n="res3Title">Event Lead - AI Workshop</h3>
+                            <p data-i18n="res3Desc">Organized a 5-day workshop for students/startups, teaching ML fundamentals and project design.</p>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </section>
@@ -428,22 +503,21 @@
                         </div>
                     </article>
 
-                    <!-- 6. Well Ops Manager (PROTECTED) -->
+                    <!-- 6. PetroPalm (PROTECTED) -->
                     <article class="project-card">
                         <div class="project-img">
-                            <img src="./resources/operation_app.png" alt="Well Ops App">
+                            <img src="./resources/operation_app.png" alt="PetroPalm App">
                         </div>
                         <div class="project-content">
                             <div class="tech-stack">
                                 <span class="tech-badge">Android</span>
-                                <span class="tech-badge">Desktop</span>
                                 <span class="tech-badge">Kotlin</span>
-                                <span class="tech-badge">Django</span>
                                 <span class="tech-badge">JavaFX</span>
+                                <span class="tech-badge">Django</span>
                                 <span class="tech-badge">Fullstack</span>
                             </div>
-                            <h3 data-i18n="p6Title">PetroPalm (my startup)</h3>
-                            <p data-i18n="p6Desc">a fullstack software solution (Kotlin + javafx + Django)</p>
+                            <h3 data-i18n="p6Title">PetroPalm (My Startup)</h3>
+                            <p data-i18n="p6Desc">Fullstack software solution (Kotlin + javafx + Django)</p>
                             <button class="project-link" onclick="openModal('p6')">
                                 <span data-i18n="viewDetails">View Details</span>
                                 <i data-lucide="arrow-right" size="16"></i>
@@ -464,6 +538,27 @@
                             <h3 data-i18n="p7Title">The Animal World</h3>
                             <p data-i18n="p7Desc">Interactive educational Android app for kids with visuals, sounds and mini-games.</p>
                             <button class="project-link" onclick="openModal('p7')">
+                                <span data-i18n="viewDetails">View Details</span>
+                                <i data-lucide="arrow-right" size="16"></i>
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- 8. Portfolio Website -->
+                    <article class="project-card">
+                        <div class="project-img">
+                            <!-- Make sure you have this image -->
+                            <img src="./resources/portfolio.png" alt="Portfolio Website">
+                        </div>
+                        <div class="project-content">
+                            <div class="tech-stack">
+                                <span class="tech-badge">HTML5</span>
+                                <span class="tech-badge">CSS3</span>
+                                <span class="tech-badge">JavaScript</span>
+                            </div>
+                            <h3 data-i18n="p8Title">My Portfolio Website</h3>
+                            <p data-i18n="p8Desc">A fully responsive, bilingual portfolio with dark mode and custom animations.</p>
+                            <button class="project-link" onclick="openModal('p8')">
                                 <span data-i18n="viewDetails">View Details</span>
                                 <i data-lucide="arrow-right" size="16"></i>
                             </button>
@@ -501,7 +596,7 @@
 
     <footer>
         <div class="container">
-            <p data-i18n="footerText">&copy; 2025 Cherif Mesroua (مسروه). Built with Code & Data.</p>
+            <p data-i18n="footerText">&copy; 2025 Cherif Mesroua. Built with Code & Data.</p>
         </div>
     </footer>
 
@@ -526,94 +621,123 @@
         // --- TRANSLATIONS ---
         const translations = {
             en: {
-                brand: "Ar<span>gaz</span>",
+                brand: "Argaz<span>.dev</span>",
                 navHome: "Home",
                 navAbout: "About",
                 navProjects: "Work",
                 navContact: "Contact",
-                heroTitle: "AI & Android<br><span class='gradient-text'>Engineer</span>",
-                heroSubtitle: "Transforming complex data into intelligent applications. Specialized in Machine Learning, Petrophysics, and Mobile Development.",
+                
+                heroTitle: "AI & Android<br><span class='gradient-text'>Engineering</span>",
+                heroSubtitle: "Transforming complex data into intelligent applications. Specialized in Machine Learning for Geoscience and Mobile Engineering.",
                 viewProjectsBtn: "View Work",
                 downloadCvBtn: "Download CV",
+                
                 aboutTitle: "About Me",
-                aboutP1: "Hello, I'm <strong>Cherif Mesroua</strong>. Holding a <strong>Master's in AI & Data Science</strong>, I bridge the gap between advanced academic research and robust application development. My passion lies in building intelligent tools that solve real-world problems in the subsurface and energy sectors.",
-                aboutP2: "Leveraging this academic foundation alongside expertise in <strong>Machine Learning</strong> and <strong>Android Development</strong>, I create systems that automate lithofacies classification and visualize complex petrophysical data.",
-                aboutP3: "I collaborate with teams to translate complex algorithms into user-friendly products — delivering efficient, maintainable, and impactful solutions.",
+                aboutP1: "I help businesses and startups transform complex ideas into high-performance software. My focus is on delivering <strong>scalable, production-ready solutions</strong> that drive real value—whether it's automating workflows or building engaging mobile experiences.",
+                aboutP2: "With a <strong>Master's in AI</strong> and industry experience at <strong>Sonatrach</strong>, I bring a rigorous engineering mindset to every project. I don't just write code; I build reliable systems that handle real-world data and solve critical business challenges.",
+                aboutP3: "As the founder of a tech startup, I understand the importance of speed and quality. From AI-powered analytics to full-stack Android apps, I partner with clients to bring their vision to life efficiently and effectively.",
+                aboutFun: "💡 <strong>Fun Fact:</strong> I build AI systems, and they seem to know me back. Go ahead, ask ChatGPT or Gemini about 'Cherif Mesroua' — even the algorithms vouch for me!",
+                
+                researchTitle: "Research & Leadership",
+                res1Title: "Depth-Aware Imputation of Missing Well Log Data",
+                res1Desc: "Presented at ISPR 2025 (Tunisia). A comparative study on Algerian Reservoir Data.",
+                res2Title: "ML-Based Lithology Classification",
+                res2Desc: "Presented at CAIDT 2025. Analyzed the FORCE 2020 dataset for automated detection.",
+                res3Title: "Event Lead - AI Workshop",
+                res3Desc: "Led a 5-day intensive AI workshop for students and startups at Kasdi Merbah University.",
+
                 projectsTitle: "Selected Works",
                 p1Title: "Petrophysical AI Prediction",
-                p1Desc: "End-to-end AI pipeline for estimating porosity and shale volume from raw well-log data.",
+                p1Desc: "Achieved R² > 0.97 in estimating porosity and shale volume using Random Forest & Gradient Boosting.",
                 p2Title: "Smart Log Imputation",
-                p2Desc: "Reconstructing missing geological logs (Gamma Ray, Resistivity) using deep learning.",
+                p2Desc: "Handled 30% missing values in well-log data using advanced Deep Learning imputation strategies.",
                 p3Title: "Lithofacies Classification",
-                p3Desc: "Automated lithology detection using the FORCE 2020 dataset for geological interpretation.",
+                p3Desc: "Achieved 96% accuracy on the FORCE 2020 dataset (1M+ samples) using optimized Random Forest.",
                 p4Title: "AiLIP – Analysis Tool",
                 p4Desc: "Desktop application (PyQt5) automating log imputation and petrophysical property prediction.",
                 p5Title: "Time-Series Forecasting",
                 p5Desc: "Pipeline for scraping data and building ARIMA/LSTM models for trend analysis.",
-                p6Title: "PetroPalm (my startup)",
-                p6Desc: "a fullstack software solution (Kotlin + javafx + Django)",
+                p6Title: "PetroPalm (My Startup)",
+                p6Desc: "Fullstack software solution (Kotlin + javafx + Django)",
                 p7Title: "The Animal World",
                 p7Desc: "Interactive educational Android app for kids with visuals, sounds and mini-games.",
+                p8Title: "Modern Portfolio Website",
+                p8Desc: "A fully responsive, bilingual personal website with dark mode and custom interactive elements.",
+                m_p8_desc: "Designed and built from scratch using semantic HTML, modern CSS (Grid/Flexbox), and Vanilla JavaScript. Features include a custom internationalization (i18n) system, local storage for theme persistence, image protection scripts, and a mobile-first responsive architecture.",
+
                 viewDetails: "View Details",
                 contactTitle: "Get in Touch",
                 labelEmail: "Email",
                 labelLinkedIn: "LinkedIn",
                 labelGitHub: "GitHub",
-                footerText: "© 2025 Cherif Mesroua (مسروه). Built with Code & Data.",
-                m_p1_desc: "This project uses Random Forest and XGBoost to predict Porosity and Shale Volume. It was trained on 50+ wells from the Volve field.",
-                m_p2_desc: "A Deep Learning approach using LSTMs to impute missing Gamma Ray logs. It achieved a 0.92 correlation coefficient on test data.",
-                m_p3_desc: "A classification system utilizing the FORCE 2020 dataset. It helps geologists identify lithology automatically, saving hours of manual interpretation.",
-                m_p4_desc: "AiLIP is a comprehensive desktop tool built with PyQt5. It packages the ML models into a user-friendly interface for geoscientists.",
+                footerText: "© 2025 Cherif Mesroua. Built with Code & Data.",
+                
+                m_p1_desc: "Developed during my time with Sonatrach. I built predictive models (Random Forest, Gradient Boosting) achieving R² > 0.97 across porosity, shale volume, and water saturation.",
+                m_p2_desc: "Addressed data quality issues by handling 30% missing values in multi-well datasets. This depth-aware imputation strategy significantly improved downstream model accuracy.",
+                m_p3_desc: "Developed lithology classification models using 1M+ samples from 118 wells. Achieved 96% accuracy through optimized preprocessing and depth-aware feature handling.",
+                m_p4_desc: "AiLIP is a comprehensive desktop tool built with PyQt5. It packages my ML research into a user-friendly interface for geoscientists.",
                 m_p5_desc: "This project involved scraping real-time betting data (1xBet) and using LSTM networks to forecast future trends and probabilities.",
-                m_p6_desc: "beta private/under development.",
+                m_p6_desc: "under development.",
                 m_p7_desc: "An educational app built with Java and Firebase. It features interactive quizzes, animal sounds, and a kid-friendly UI.",
                 visitRepo: "View Code on GitHub",
-                proprietaryBtn: "Proprietary Project (Private)"
+                proprietaryBtn: "Startup - In Development"
             },
             ar: {
-                brand: "Ar<span>gaz</span>",
+                brand: "Argaz<span>.dev</span>",
                 navHome: "الرئيسية",
                 navAbout: "عن المطور",
                 navProjects: "أعمالي",
                 navContact: "تواصل",
-                heroTitle: "مهندس الذكاء الاصطناعي<br><span class='gradient-text'>وتطبيقات الأندرويد</span>",
+                heroTitle: "هندسة الذكاء الاصطناعي<br><span class='gradient-text'>وتطبيقات الأندرويد</span>",
                 heroSubtitle: "تحويل البيانات المعقدة إلى تطبيقات ذكية. متخصص في تعلم الآلة، البتروفيزياء، وتطوير التطبيقات.",
                 viewProjectsBtn: "تصفح أعمالي",
                 downloadCvBtn: "تحميل السيرة الذاتية",
                 aboutTitle: "نبذة عني",
-                aboutP1: "مرحباً، أنا <strong>شريف مسروه</strong>. بصفتي حاصلاً على <strong>ماجستير في الذكاء الاصطناعي وعلوم البيانات</strong>، أعمل كجسر يربط بين البحث الأكاديمي المتقدم وتطوير البرمجيات العملية. شغفي يكمن في بناء أدوات ذكية تحل مشاكل حقيقية في قطاع الطاقة.",
-                aboutP2: "أوظف تخصصي الأكاديمي وخبرتي العملية في <strong>تعلم الآلة</strong> و<strong>تطوير الأندرويد</strong> لإنشاء أنظمة قوية تقوم بأتمتة تصنيف الصخور وتصور البيانات البتروفيزيائية المعقدة.",
-                aboutP3: "أتعاون مع الفرق لتحويل الخوارزميات المعقدة إلى منتجات سهلة الاستخدام — مقدماً حلولاً فعالة وعالية الجودة.",
+                aboutP1: "أساعد الشركات ورواد الأعمال على تحويل الأفكار المعقدة إلى حلول برمجية عالية الأداء. تركيزي ينصب على تقديم <strong>حلول قابلة للتطوير (Scalable)</strong> تحقق قيمة تجارية حقيقية—سواء كان ذلك عبر أتمتة العمليات أو بناء تطبيقات جوال تفاعلية.",
+                aboutP2: "بفضل حصولي على <strong>ماجستير في الذكاء الاصطناعي</strong> وخبرتي الميدانية مع <strong>سوناطراك</strong>، أقدم عقلية هندسية صارمة لكل مشروع. أنا لا أكتب مجرد أكواد، بل أبني أنظمة موثوقة قادرة على معالجة بيانات العالم الحقيقي وحل تحديات الأعمال الحرجة.",
+                aboutP3: "بصفتي مؤسس شركة ناشئة تقنية، أدرك أهمية الجودة والسرعة في التنفيذ. من أدوات التحليل الذكية إلى تطبيقات الأندرويد المتكاملة، أعمل كشريك لعملائي لتحويل رؤيتهم إلى واقع ملموس وبكفاءة عالية.",
+                aboutFun: "💡 <strong>معلومة طريفة:</strong> أنا أبني أنظمة الذكاء الاصطناعي، ويبدو أنها ترد الجميل. جرب أن تسأل ChatGPT أو Gemini عن 'cherif mesroua' — حتى الخوارزميات تشهد لي!",
+
+                researchTitle: "الأبحاث والريادة",
+                res1Title: "التعويض العميق لبيانات الآبار المفقودة",
+                res1Desc: "تم تقديمه في مؤتمر ISPR 2025 (تونس). دراسة مقارنة على بيانات المكامن الجزائرية.",
+                res2Title: "تصنيف الصخور باستخدام تعلم الآلة",
+                res2Desc: "تم تقديمه في CAIDT 2025. تحليل مجموعة بيانات FORCE 2020 للكشف الآلي عن نوعية الصخور.",
+                res3Title: "قائد ورشة عمل الذكاء الاصطناعي",
+                res3Desc: "نظمت وقدت ورشة عمل مكثفة لمدة 5 أيام للطلاب والشركات الناشئة في جامعة قاصدي مرباح.",
                 projectsTitle: "أعمال مختارة",
                 p1Title: "توقعات بتروفيزيائية بالذكاء الاصطناعي",
-                p1Desc: "خط عمل متكامل لتقدير المسامية وحجم الغضار من سجلات الآبار بدقة عالية.",
+                p1Desc: "تحقيق دقة R² > 0.97 في تقدير المسامية وحجم الغضار باستخدام Random Forest و Gradient Boosting.",
                 p2Title: "التعويض الذكي للسجلات",
-                p2Desc: "إعادة بناء السجلات الجيولوجية المفقودة (أشعة جاما والمقاومة) باستخدام التعلم العميق.",
+                p2Desc: "معالجة 30% من القيم المفقودة في بيانات الآبار باستخدام استراتيجيات التعلم العميق.",
                 p3Title: "تصنيف السحنات الصخرية",
-                p3Desc: "نظام كشف آلي لنوعية الصخور باستخدام بيانات FORCE 2020 لتسريع التفسير الجيولوجي.",
+                p3Desc: "تحقيق دقة 96% على مجموعة بيانات FORCE 2020 (أكثر من مليون عينة) باستخدام خوارزميات محسنة.",
                 p4Title: "أداة التحليل AiLIP",
                 p4Desc: "تطبيق سطح مكتب (PyQt5) يقوم بأتمتة تعويض السجلات وتوقع الخصائص البتروفيزيائية.",
                 p5Title: "التنبؤ بالسلاسل الزمنية",
                 p5Desc: "نظام لكشط البيانات وبناء نماذج ARIMA/LSTM لتحليل الاتجاهات المستقبلية.",
                 p6Title: "PetroPalm (شركتي الناشئة)",
-                p6Desc: "و مشروعي الريادي. حل برمجي متكامل (Kotlin + Django)",
+                p6Desc: "حل برمجي متكامل (Kotlin + javafx + Django)",
                 p7Title: "عالم الحيوان",
                 p7Desc: "تطبيق تعليمي تفاعلي للأطفال يحتوي على صور وأصوات وألعاب مصغرة.",
+                p8Title: "موقع معرض الأعمال الشخصي",
+                p8Desc: "موقع متجاوب بالكامل، ثنائي اللغة، يدعم الوضع الليلي والرسوم المتحركة المخصصة.",
+                m_p8_desc: "تم تصميمه وبناؤه من الصفر باستخدام HTML الدلالي، و CSS الحديث، و JavaScript النقي. تشمل الميزات نظام ترجمة مخصص، حفظ إعدادات المظهر محلياً، نصوص برمجية لحماية الصور، وهيكلية متجاوبة تعطي الأولوية للهواتف المحمولة.",
                 viewDetails: "عرض التفاصيل",
                 contactTitle: "تواصل معي",
                 labelEmail: "البريد الإلكتروني",
                 labelLinkedIn: "لينكد إن",
                 labelGitHub: "جيت هب",
-                footerText: "© 2025 شريف مسروه. صُنِع بالكود والبيانات.",
-                m_p1_desc: "يستخدم هذا المشروع خوارزميات Random Forest و XGBoost للتنبؤ بالمسامية وحجم الغضار. تم تدريبه على أكثر من 50 بئراً من حقل Volve.",
-                m_p2_desc: "نهج يعتمد على التعلم العميق باستخدام شبكات LSTM لتعويض سجلات أشعة جاما المفقودة. حقق معامل ارتباط 0.92 في بيانات الاختبار.",
-                m_p3_desc: "نظام تصنيف يستخدم مجموعة بيانات FORCE 2020. يساعد الجيولوجيين على تحديد نوعية الصخور تلقائيًا، مما يوفر ساعات من التفسير اليدوي.",
-                m_p4_desc: "AiLIP هو أداة سطح مكتب شاملة مبنية بـ PyQt5. تقوم بتغليف نماذج التعلم الآلي في واجهة سهلة الاستخدام للجيولوجيين.",
+                footerText: "© 2025 Cherif Mesroua. Built with Code & Data.",
+                m_p1_desc: "تم تطويره خلال فترتي مع سوناطراك. قمت ببناء نماذج تنبؤية (Random Forest, Gradient Boosting) حققت دقة R² > 0.97 للمسامية، حجم الغضار، وتشبع المياه.",
+                m_p2_desc: "عالجت مشاكل جودة البيانات من خلال التعامل مع 30% من القيم المفقودة في مجموعات بيانات متعددة الآبار، مما حسن دقة النماذج بشكل كبير.",
+                m_p3_desc: "تطوير نماذج تصنيف الصخور باستخدام أكثر من مليون عينة من 118 بئراً. حققت دقة 96% من خلال تحسين المعالجة المسبقة ومعالجة الميزات القائمة على العمق.",
+                m_p4_desc: "AiLIP هو أداة سطح مكتب شاملة مبنية بـ PyQt5. تقوم بتغليف أبحاث تعلم الآلة في واجهة سهلة الاستخدام للجيولوجيين.",
                 m_p5_desc: "تضمن هذا المشروع كشط بيانات المراهنات في الوقت الفعلي (1xBet) واستخدام شبكات LSTM للتنبؤ بالاتجاهات والاحتمالات المستقبلية.",
-                m_p6_desc: "beta خاصة/قيد التطوير.",
+                m_p6_desc: "قيد التطوير.",
                 m_p7_desc: "تطبيق تعليمي تم بناؤه باستخدام Java و Firebase. يتميز بمسابقات تفاعلية وأصوات حيوانات وواجهة مناسبة للأطفال.",
                 visitRepo: "عرض الكود على GitHub",
-                proprietaryBtn: "مشروع خاص (غير متاح)"
+                proprietaryBtn: "مشروع ناشيء - قيد التطوير"
             }
         };
 
@@ -673,8 +797,9 @@
             'p3': { titleKey: 'p3Title', descKey: 'm_p3_desc', link: 'https://github.com/CherifMesroua', isPrivate: false },
             'p4': { titleKey: 'p4Title', descKey: 'm_p4_desc', link: 'https://github.com/CherifMesroua', isPrivate: false },
             'p5': { titleKey: 'p5Title', descKey: 'm_p5_desc', link: 'https://github.com/CherifMesroua', isPrivate: false },
-            'p6': { titleKey: 'p6Title', descKey: 'm_p6_desc', link: '#', isPrivate: true },
-            'p7': { titleKey: 'p7Title', descKey: 'm_p7_desc', link: 'https://github.com/CherifMesroua', isPrivate: false }
+            'p6': { titleKey: 'p6Title', descKey: 'm_p6_desc', link: 'https://github.com/CherifMesroua', isPrivate: true },
+            'p7': { titleKey: 'p7Title', descKey: 'm_p7_desc', link: 'https://github.com/CherifMesroua', isPrivate: false },
+            'p8': { titleKey: 'p8Title', descKey: 'm_p8_desc', link: 'https://github.com/CherifMesroua', isPrivate: false }
         };
 
         function openModal(id) {
